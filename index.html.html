@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karthik K.V. — Cloud &amp; Infrastructure</title>
+<meta name="description" content="Karthik K.V. — BCA-Honours student in Kerala building and automating cloud infrastructure with Ansible, AWS, Linux and Bash.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,300..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E7EDF1;
+  --ink:#10263A;
+  --ink-soft:#3D5B72;
+  --rule:#B4C7D4;
+  --rule-faint:#CFDCE5;
+  --signal:#B8500F;
+  --panel:#F3F7F9;
+  --grid:rgba(16,38,58,.055);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1E2E;
+    --ink:#D7E7F2;
+    --ink-soft:#8FAFC4;
+    --rule:#2E4B61;
+    --rule-faint:#1E374A;
+    --signal:#F0A24B;
+    --panel:#112738;
+    --grid:rgba(158,201,226,.07);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1E2E;
+  --ink:#D7E7F2;
+  --ink-soft:#8FAFC4;
+  --rule:#2E4B61;
+  --rule-faint:#1E374A;
+  --signal:#F0A24B;
+  --panel:#112738;
+  --grid:rgba(158,201,226,.07);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);
+  font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size:17px;
+  line-height:1.65;
+  font-optical-sizing:auto;
+}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--signal); outline-offset:3px}
+
+.wrap{max-width:74rem;margin:0 auto;padding:0 clamp(1.1rem,4vw,3.25rem)}
+
+h1,h2,h3,.mech{
+  font-family:Archivo, "Helvetica Neue", Arial, sans-serif;
+  font-variation-settings:"wdth" 108;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+
+/* ---------- masthead ---------- */
+.mast{
+  position:sticky;
+  top:env(safe-area-inset-top, 0px);
+  z-index:20;
+  display:flex;flex-wrap:wrap;gap:.9rem 1.5rem;
+  align-items:baseline;justify-content:space-between;
+  padding:1.4rem clamp(1.1rem,4vw,3.25rem) 1.1rem;
+  margin:0 calc(-1 * clamp(1.1rem,4vw,3.25rem));
+  border-bottom:1px solid var(--rule);
+  background:var(--paper);
+}
+.mast .who{font-size:.95rem;font-weight:700;font-variation-settings:"wdth" 118}
+.mast nav{display:flex;flex-wrap:wrap;gap:1.25rem;font-size:.95rem}
+.mast nav a{text-decoration:none;color:var(--ink-soft);border-bottom:1px solid transparent;padding-bottom:2px}
+.mast nav a:hover{color:var(--ink);border-bottom-color:var(--signal)}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(3rem,9vw,6.5rem) 0 clamp(2.5rem,6vw,4rem)}
+.hero h1{
+  margin:0;
+  font-size:clamp(2.9rem,11vw,7.4rem);
+  line-height:.92;
+  font-weight:700;
+  font-variation-settings:"wdth" 120;
+  letter-spacing:-.035em;
+}
+.hero h1 .surname{display:block;color:var(--ink-soft)}
+
+/* drafting dimension line under the name */
+.dim{
+  display:flex;align-items:center;gap:.7rem;
+  margin:1.5rem 0 1.9rem;color:var(--ink-soft);
+}
+.dim .bar{flex:1;height:1px;background:var(--rule);position:relative}
+.dim .bar::before,.dim .bar::after{
+  content:"";position:absolute;top:-4px;width:1px;height:9px;background:var(--rule);
+}
+.dim .bar::before{left:0}
+.dim .bar::after{right:0}
+.dim .tag{
+  font-family:Archivo, Arial, sans-serif;font-size:.78rem;letter-spacing:.06em;
+  font-variation-settings:"wdth" 95;white-space:nowrap;
+}
+
+.lede{
+  max-width:34ch;
+  font-size:clamp(1.3rem,2.6vw,1.75rem);
+  line-height:1.4;
+  margin:0 0 1.6rem;
+}
+.sub{max-width:62ch;color:var(--ink-soft);margin:0 0 2.2rem}
+
+.contact{display:flex;flex-wrap:wrap;gap:.6rem}
+.contact a{
+  font-family:Archivo, Arial, sans-serif;font-size:.9rem;text-decoration:none;
+  padding:.45rem .9rem;border:1px solid var(--rule);border-radius:2px;
+  background:var(--panel);
+}
+.contact a:hover{border-color:var(--signal);color:var(--signal)}
+
+/* ---------- sections ---------- */
+section{border-top:1px solid var(--rule);padding:clamp(2.6rem,6vw,4.4rem) 0}
+.head{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:.35rem;
+  margin-bottom:2.4rem;
+}
+.head h2{margin:0;font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:700;letter-spacing:-.02em}
+.head p{margin:0;color:var(--ink-soft);max-width:56ch}
+
+/* ---------- projects ---------- */
+.build{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  gap:.9rem;
+  padding:1.9rem 0;
+  border-top:1px solid var(--rule-faint);
+}
+.build:first-of-type{border-top:none;padding-top:0}
+.build h3{margin:0;font-size:1.28rem;font-weight:700;line-height:1.25}
+.build .role{color:var(--signal);font-family:Archivo,Arial,sans-serif;font-size:.85rem;font-variation-settings:"wdth" 95;margin:0}
+.build ul{margin:0;padding-left:1.05rem;max-width:68ch}
+.build li{margin-bottom:.45rem}
+.build li::marker{color:var(--rule)}
+.stack{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:.2rem 0 0}
+.stack li{
+  font-family:Archivo,Arial,sans-serif;font-size:.78rem;color:var(--ink-soft);
+  border:1px solid var(--rule-faint);border-radius:2px;padding:.18rem .55rem;margin:0;
+}
+@media (min-width:56rem){
+  .build{grid-template-columns:19rem minmax(0,1fr);gap:.9rem 3rem;align-items:start}
+  .build .side{grid-column:1;grid-row:1 / span 3}
+  .build .body{grid-column:2}
+}
+
+/* ---------- ledger (experience + education) ---------- */
+.ledger{display:grid;gap:1.6rem}
+@media (min-width:48rem){.ledger{grid-template-columns:1fr 1fr;gap:3rem}}
+.entry{border-left:2px solid var(--signal);padding-left:1.1rem}
+.entry + .entry{margin-top:1.6rem}
+.entry h3{margin:0 0 .15rem;font-size:1.12rem;font-weight:700}
+.entry .org{margin:0;color:var(--ink-soft)}
+.entry .when{margin:.3rem 0 0;font-family:Archivo,Arial,sans-serif;font-size:.85rem;color:var(--ink-soft)}
+.entry p.note{margin:.6rem 0 0;max-width:46ch}
+
+/* ---------- skills ---------- */
+.skills{display:grid;gap:1.8rem}
+@media (min-width:44rem){.skills{grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 3rem}}
+@media (min-width:64rem){.skills{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.skills h3{margin:0 0 .7rem;font-size:1rem;font-weight:700;padding-bottom:.5rem;border-bottom:1px solid var(--rule)}
+.skills ul{list-style:none;margin:0;padding:0}
+.skills li{padding:.22rem 0;color:var(--ink-soft)}
+
+/* ---------- learning ---------- */
+.learning{display:grid;gap:1.4rem;max-width:70ch}
+.learning div{padding-left:1.1rem;border-left:1px solid var(--rule)}
+.learning h3{margin:0 0 .25rem;font-size:1.05rem;font-weight:700}
+.learning p{margin:0;color:var(--ink-soft)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--rule);padding:clamp(2.6rem,6vw,4rem) 0 3.5rem}
+footer h2{margin:0 0 1rem;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;letter-spacing:-.02em}
+footer p{max-width:48ch;color:var(--ink-soft)}
+.sign{
+  margin-top:2.6rem;padding-top:1.1rem;border-top:1px solid var(--rule-faint);
+  display:flex;flex-wrap:wrap;gap:.5rem 2rem;
+  font-family:Archivo,Arial,sans-serif;font-size:.82rem;color:var(--ink-soft);
+}
+footer a{color:var(--signal)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="mast">
+    <span class="who mech">Karthik K.V.</span>
+    <nav>
+      <a href="#projects">Projects</a>
+      <a href="#background">Background</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>Karthik<span class="surname">K.V.</span></h1>
+
+    <div class="dim">
+      <span class="tag mech">Malappuram, Kerala</span>
+      <span class="bar"></span>
+      <span class="tag mech">BCA-Honours, 2028</span>
+    </div>
+
+    <p class="lede">I build cloud infrastructure and then write the code that runs it for me.</p>
+    <p class="sub">Computer applications student and former cloud intern, working with AWS, Linux, Ansible and Bash. Most of what I build starts as a server I have to configure by hand — and ends as a playbook that does it in one command.</p>
+
+    <div class="contact">
+      <a href="mailto:karthikkv963@gmail.com">karthikkv963@gmail.com</a>
+      <a href="tel:+919947624304">+91 99476 24304</a>
+      <a href="https://www.linkedin.com/in/karthik-kv-4829853a9" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/Karthik963963" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+
+  <section id="projects">
+    <div class="head">
+      <h2>Projects</h2>
+      <p>Four builds, each one run end to end: provisioning, configuration, securing and troubleshooting.</p>
+    </div>
+
+    <article class="build">
+      <div class="side">
+        <h3>Automated web infrastructure</h3>
+        <p class="role">Ansible &amp; infrastructure as code</p>
+      </div>
+      <div class="body">
+        <ul>
+          <li>Built configuration management pipelines with Ansible to automate deployments across multi-node AWS EC2 instances.</li>
+          <li>Wrote YAML playbooks to provision Apache web servers, manage inventories and handle SSH authentication.</li>
+          <li>Managed server system states and troubleshot failures through the Linux CLI and systemctl.</li>
+        </ul>
+        <ul class="stack">
+          <li>Ansible</li><li>AWS EC2</li><li>YAML</li><li>Apache</li><li>SSH</li><li>systemctl</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="side">
+        <h3>Secure stack</h3>
+        <p class="role">Cloud security &amp; deployment</p>
+      </div>
+      <div class="body">
+        <ul>
+          <li>Deployed a web-based password strength analyzer on an AWS EC2 instance running Ubuntu 24.04 LTS.</li>
+          <li>Locked down the instance with AWS Security Groups, leaving only ports 22 and 80 reachable.</li>
+          <li>Handled full environment provisioning, dependency management and secure access testing.</li>
+        </ul>
+        <ul class="stack">
+          <li>AWS EC2</li><li>Ubuntu 24.04 LTS</li><li>Security Groups</li><li>Linux</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="side">
+        <h3>Enterprise IAM workspace</h3>
+        <p class="role">Azure DevOps &amp; access control</p>
+      </div>
+      <div class="body">
+        <ul>
+          <li>Set up a structured DevOps ecosystem with a dedicated devops-org and devops-lab workspace.</li>
+          <li>Applied least-privilege access by provisioning separate Admin and Reader roles.</li>
+          <li>Managed user lifecycles and monitored active resources to stop cloud credits leaking.</li>
+        </ul>
+        <ul class="stack">
+          <li>Azure DevOps</li><li>IAM</li><li>Role-based access</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="build">
+      <div class="side">
+        <h3>Cloud-hosted task manager</h3>
+        <p class="role">Python application &amp; deployment</p>
+      </div>
+      <div class="body">
+        <ul>
+          <li>Developed a responsive task-tracking web application with Python handling the core logic.</li>
+          <li>Hosted it on AWS EC2, configuring network firewalls and the web server environment.</li>
+          <li>Automated deployment and routine server configuration with Bash scripting.</li>
+        </ul>
+        <ul class="stack">
+          <li>Python</li><li>AWS EC2</li><li>Bash</li><li>HTML</li><li>CSS</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section id="background">
+    <div class="head">
+      <h2>Background</h2>
+    </div>
+    <div class="ledger">
+      <div>
+        <div class="entry">
+          <h3>Cloud Intern</h3>
+          <p class="org">IPSR Solutions Pvt Ltd</p>
+          <p class="when">6 April 2026 — 21 May 2026</p>
+          <p class="note">Hands-on cloud and DevOps work across AWS, Linux administration and automation tooling.</p>
+        </div>
+      </div>
+      <div>
+        <div class="entry">
+          <h3>BCA-Honours</h3>
+          <p class="org">University of Calicut</p>
+          <p class="when">Expected 2028</p>
+          <p class="note">Bachelor of Computer Applications, with a focus on systems, programming and databases.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="head">
+      <h2>Skills</h2>
+    </div>
+    <div class="skills">
+      <div>
+        <h3>Cloud &amp; systems</h3>
+        <ul>
+          <li>Linux</li>
+          <li>AWS EC2</li>
+          <li>Azure DevOps</li>
+          <li>Bash scripting</li>
+          <li>Ansible</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Programming</h3>
+        <ul>
+          <li>Python</li>
+          <li>Java</li>
+          <li>Object-oriented programming</li>
+          <li>HTML</li>
+          <li>CSS</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Data</h3>
+        <ul>
+          <li>PostgreSQL</li>
+          <li>MS Excel</li>
+          <li>Tableau</li>
+          <li>Power BI</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Tools &amp; languages</h3>
+        <ul>
+          <li>Git version control</li>
+          <li>English</li>
+          <li>Malayalam</li>
+          <li>Hindi</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="learning">
+    <div class="head">
+      <h2>Beyond the coursework</h2>
+      <p>What I am reading, attending and writing about right now.</p>
+    </div>
+    <div class="learning">
+      <div>
+        <h3>OpenShift AI for future careers</h3>
+        <p>Webinar by Red Hat and IPSR Solutions Ltd. Covered deploying, scaling and managing cloud-native AI/ML models inside enterprise Kubernetes and DevOps pipelines.</p>
+      </div>
+      <div>
+        <h3>Workshop at UL Cyberpark, Calicut</h3>
+        <p>Conducted by IPSR Solutions Pvt Ltd.</p>
+      </div>
+      <div>
+        <h3>Data analysis and visualisation</h3>
+        <p>Working through datasets in Excel and turning the insights into visual reports with Tableau and Power BI.</p>
+      </div>
+      <div>
+        <h3>Writing about what I build</h3>
+        <p>Tech blogging and professional networking around automation, tooling and hands-on project journeys.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <h2>Let's talk</h2>
+    <p>Open to internships and entry-level roles in cloud, DevOps and systems engineering. The quickest way to reach me is email.</p>
+    <p style="margin-top:1.2rem">
+      <a href="mailto:karthikkv963@gmail.com">karthikkv963@gmail.com</a><br>
+      <a href="tel:+919947624304">+91 99476 24304</a><br>
+      <a href="https://www.linkedin.com/in/karthik-kv-4829853a9" target="_blank" rel="noopener">linkedin.com/in/karthik-kv-4829853a9</a><br>
+      <a href="https://github.com/Karthik963963" target="_blank" rel="noopener">github.com/Karthik963963</a>
+    </p>
+    <div class="sign">
+      <span>Irimbiyam (PO), Mankery, Malappuram district, Kerala, India</span>
+      <span>Updated September 2026</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
